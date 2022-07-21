@@ -1,25 +1,20 @@
-#!/usr/bin/python3
+#! /usr/bin/env python3
 from sys import argv
-from math import sqrt
 
 
-def factor():
+def factorize():
     with open(argv[1]) as f:
-        for line in f:
-            num = int(line)
-            print("{:d}=".format(num), end="")
-            if num % 2 == 0:
-                print("{}*2".format(num//2))
-                continue
-            sqn = int(sqrt(num))
-            if sqn % 2 == 0:
-                sqn += 1
-            for i in range(3, sqn + 1, 2):
+        for number in f:
+            num = int(number)
+            flag = 0
+            for i in range(2, int(num / 2) + 1, 1):
                 if num % i == 0:
-                    print("{}*{}".format(i, num//i))
+                    print("{:d}={}*{}".format(num, num // i, i))
+                    flag = 1
                     break
-            if num % i != 0:
-                print("{}={}*1".format(num, num))
+            if flag == 0:
+                print("{:d}={}*{}".format(num, num, 1))
 
 
-factor()
+if __name__ == "__main__":
+    factorize()
