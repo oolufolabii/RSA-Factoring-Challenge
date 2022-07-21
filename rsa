@@ -1,48 +1,30 @@
-#!/usr/bin/env bash
-#is a challenge
-factorize()
-{
-	if [ $# -ne 3 ];
-        then
-                args=("$@")
-                counter=0
-                num2=1
-                for a in ${args[*]};
-                do
-                        if [ $counter -gt 1 ];
-                        then
-                                num2=$(echo $a*$num2 | bc)
-                        fi
-                        counter=$((counter + 1))
-                done
-        else
-                num2=$3
-        fi
+#!/usr/bin/env python3
+'''Module - Factors natural numbers'''
 
-        num1=$2
-        num=$(echo "$1" | tr ':' '=')
+from __future__ import division
+import sys
+import os
 
-        result=$(echo "if($num2 > $num1) 1 else 0" | bc)
-	        if ((result == 1)); then
-		        numcp=$num1
-		        num1=$num2
-		        num2=$numcp
-                fi
 
-        echo "$num$num1*$num2"
-}
+def func_factors(filename):
+    '''Read and find Factorials'''
+    with open(filename, 'r') as f:
+        for line in f:
+            num = int(line)
+            res = factors(num)
+            print("{}={}*{}".format(num, int(num / res), res))
+    f.closed
 
-if [ $# -ne 1 ]
-then
-        echo 'Usage: rsa <file>'
-        exit 1
-else
 
-        while read i
-        do
+def factors(x):
+    '''Returns the minimun factorial number '''
+    for y in range(1, x + 1):
+        if x % y == 0 and y != 1:
+            return y
 
-                result=$(factor "$i")
-                factorize $result
 
-        done < "$1"
-fi
+if __name__ == "__main__":
+    '''main'''
+    if (len(sys.argv) != 2):
+        raise SyntaxError("[BAD-USAGE]: Expected only one argument")
+    func_factors(sys.argv[1])
