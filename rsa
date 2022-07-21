@@ -39,8 +39,7 @@ def factorize():
                             print(f"{value}={value//i}*{i}")
                             break
                         i = i + 2
-                    else:
-                        print(f"{value}={value}*{1}")
+
                     if i == (value // 2) + 1:
                         print(f"{value}={value}*{1}")
 
