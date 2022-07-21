@@ -1,31 +1,52 @@
 #!/usr/bin/python3
+"""
+Factorize as many numbers as possible into a product of two smaller numbers.
+In the shortest possible time. Program will be killed after 5 seconds
+    Usage: python3 rsa <file>
+    Output format: n=p*q
+
+"""
+# library to get arguments
 import sys
-import math
 
 
 def reading(file):
-    # total = 0
+    """
+    A function to handle file opening and closing.
+    """
     with open(file) as data:
         new_data = data.readlines()
-        # print(new_data)
     return new_data
 
 
-for file_index in range(len(sys.argv)):
-    if file_index != 0:
-        data = reading(sys.argv[file_index])
-        for item in data:
-            number = int(item)
-            # print(number)
+def factorize():
+    """"Prints out factorials of value in the
+    value(n)=p*q format. Where p & q are
+    factorials of the value n.
+    """
+    try:
+        for file_index in range(len(sys.argv)):
+            if file_index != 0:
+                data = reading(sys.argv[file_index])
+                for item in data:
+                    value = int(item)
+                    if value % 2 == 0:
+                        print(f"{value}={value//2}*{2}")
+                        continue
+                    i = 3
+                    while i < value // 2:
+                        if value % i == 0:
+                            print(f"{value}={value//i}*{i}")
+                            break
+                        i = i + 2
+                    else:
+                        print(f"{value}={value}*{1}")
+                    if i == (value // 2) + 1:
+                        print(f"{value}={value}*{1}")
 
-            if number % 2 == 0:
-                print("{}*2".format(number//2))
-                continue
-            for i in range(3, number, 2):
-                if number % i == 0:
-                    factor = number//i
-                    for j in range(3, factor, 2):
-                        if factor % j == 0 or i % j == 0:
-                                break
-                        print("{}*{}".format(factor, i))
-                        break
+    except Exception as err:
+        print(err)
+
+
+# start
+factorize()
