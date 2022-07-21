@@ -1,20 +1,20 @@
 #!/usr/bin/env bash
 # is a factors challenge
 
-check_factor()
+factorize()
 {
 	if [ $# -ne 3 ];
         then
                 args=("$@")
-                count=0
+                counter=0
                 num2=1
                 for a in ${args[*]};
                 do
-                        if [ $count -gt 1 ];
+                        if [ $counter -gt 1 ];
                         then
                                 num2=$(echo $a*$num2 | bc)
                         fi
-                        count=$((count + 1))
+                        counter=$((counter + 1))
                 done
         else
                 num2=$3
@@ -43,7 +43,7 @@ else
         do
 
                 result=$(factor "$i")
-                check_factor $result
+                factorize $result
 
         done < "$1"
 fi
