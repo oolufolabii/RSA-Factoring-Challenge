@@ -6,30 +6,37 @@
     n=p*q. With processing speed as a
     critical factor
     """
+
 from sys import argv
 
 
-def factorize(value):
-    """"print a simple descomposition of an integer > 1"""
-    i = 2
-
-    if value < 2:
-        return
-    while value % i:
-        i += 1
-    print("{:.0f}={:.0f}*{:.0f}".format(value, value / i, i))
+def mult_arr(arr):
+    prod = 1
+    for x in arr:
+        prod *= x
+    return prod
 
 
-if len(argv) != 2:
-    exit()
+def factorializer(n):
+    primefactors = []
+    d = 2
+    while d * d <= n:
+        while (n % d) == 0:
+            primefactors.append(d)
+            n //= d
+        d += 1
+    if n > 1:
+        primefactors.append(n)
+    q = primefactors.pop(0)
+    return (mult_arr(primefactors), q)
 
-try:
-    with open(argv[1]) as file:
-        line = file.readline()
 
-        while line != "":
-            value = int(line.split('\n')[0])
-            factorize(value)
-            line = file.readline()
-except Exception as err:
-    print(err)
+def main():
+    with open(argv[1]) as f:
+        for line in f:
+            print('{}={}*{}'.format(line.rstrip('\n'),
+                                    *factorializer(int(line))))
+
+
+if __name__ == '__main__':
+    main()
