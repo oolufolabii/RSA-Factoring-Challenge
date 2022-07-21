@@ -1,12 +1,11 @@
 #!/usr/bin/python3
-"""
-Factorize as many numbers as possible into a product of two smaller numbers.
-In the shortest possible time. Program will be killed after 5 seconds
-    Usage: python3 rsa <file>
-    Output format: n=p*q
 
 """
-# library to get arguments
+    This module is created to return the
+    factors of a number in the format
+    n=p*q. With processing speed as a
+    critical factor
+    """
 import sys
 
 
@@ -16,36 +15,36 @@ def reading(file):
     """
     with open(file) as data:
         new_data = data.readlines()
+        # print(new_data)
     return new_data
 
 
-def factorize():
+def factorize(value):
     """"Prints out factorials of value in the
     value(n)=p*q format. Where p & q are
     factorials of the value n.
     """
-    try:
-        for file_index in range(len(sys.argv)):
-            if file_index != 0:
-                data = reading(sys.argv[file_index])
-                for item in data:
-                    value = int(item)
-                    if value % 2 == 0:
-                        print(f"{value}={value//2}*{2}")
-                        continue
-                    i = 3
-                    while i < value // 2:
-                        if value % i == 0:
-                            print(f"{value}={value//i}*{i}")
-                            break
-                        i = i + 2
+    i = 2
 
-                    if i == (value // 2) + 1:
-                        print(f"{value}={value}*{1}")
+    if value < 2:
+        return
+
+    while value % i:
+        i += 1
+
+    print(f"{value}={(value/i):.0f}*{i}")
+
+
+def main():
+    try:
+        data = reading(sys.argv[1])
+        for item in data:
+            value = int(item)
+            factorize(value)
 
     except Exception as err:
         print(err)
 
 
-# start
-factorize()
+"""start Main Function"""
+main()
