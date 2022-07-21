@@ -1,39 +1,29 @@
 #!/usr/bin/python3
+from sys import argv
 
-"""
-    This module is created to return the
-    factors of a number in the format
-    n=p*q. With processing speed as a
-    critical factor
-    """
-import sys
-i  # library to get arguments
+def mult_arr(arr):
+    prod = 1
+    for x in arr:
+        prod *= x
+    return prod
 
+def factorializer(n):
+    primefactors = []
+    d = 2
+    while d * d <= n:
+        while (n % d) == 0:
+            primefactors.append(d)
+            n //= d
+        d += 1
+    if n > 1:
+       primefactors.append(n)
+    q = primefactors.pop(0)
+    return (mult_arr(primefactors), q)
 
-# fn unpack number factorial
-def fc():
-    """
-    function fc to search file to convert number and format n=p*q
-    """
-    try:
-        revfile = sys.argv[1]
-        with open(revfile) as f:
-            for revnumber in f:
-                revnumber = int(revnumber)
-                if revnumber % 2 == 0:
-                    print("{}={}*{}".format(revnumber, revnumber // 2, 2))
-                    continue
-                i = 3
-                while i < revnumber // 2:
-                    if revnumber % i == 0:
-                        print("{}={}*{}".format(revnumber, revnumber // i, i))
-                        break
-                    i = i + 2
-                if i == (revnumber // 2) + 1:
-                    print("{}={}*{}".format(revnumber, revnumber, 1))
-    except (IndexError):
-        pass
+def main():
+    with open(argv[1]) as f:
+        for line in f:
+            print('{}={}*{}'.format(line.rstrip('\n'), *factorializer(int(line))))
 
-
-# autostart
-fc()
+if __name__ == '__main__':
+    main()
