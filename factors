@@ -1,34 +1,50 @@
 #!/usr/bin/python3
-"""Module that factorize as many numbers as possible
- into a product of two smaller numbers."""
-from sys import argv
+
+"""
+    This module is created to return the
+    factors of a number in the format
+    n=p*q. With processing speed as a
+    critical factor
+    """
+import sys
+
+
+def reading(file):
+    """
+    A function to handle file opening and closing.
+    """
+    with open(file) as data:
+        new_data = data.readlines()
+        # print(new_data)
+    return new_data
 
 
 def factorize(value):
-    """"print a simple descomposition of an integer > 1"""
+    """"Prints out factorials of value in the
+    value(n)=p*q format. Where p & q are
+    factorials of the value n.
+    """
     i = 2
 
     if value < 2:
         return
-    print()
-    print(value, "<- value-bef")
+
     while value % i:
         i += 1
-    print("{:.0f}={:.0f}*{:.0f}".format(value, value / i, i))
-    print(value, "<- value-aft")
-    print()
+
+    print(f"{value}={(value/i):.0f}*{i}")
 
 
-if len(argv) != 2:
-    exit()
-
-try:
-    with open(argv[1]) as file:
-        line = file.readline()
-
-        while line != "":
-            value = int(line.split('\n')[0])
+def main():
+    try:
+        data = reading(sys.argv[1])
+        for item in data:
+            value = int(item)
             factorize(value)
-            line = file.readline()
-except Exception as err:
-    print(err)
+
+    except Exception as err:
+        print(err)
+
+
+"""start Main Function"""
+main()
