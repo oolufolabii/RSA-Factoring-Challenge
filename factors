@@ -1,50 +1,31 @@
-#!/usr/bin/python3
-
-"""
-    This module is created to return the
-    factors of a number in the format
-    n=p*q. With processing speed as a
-    critical factor
-    """
+# library to get arguments
 import sys
 
 
-def reading(file):
+# fn unpack number factorial
+def fc():
     """
-    A function to handle file opening and closing.
+    function fc to search file to convert number and format n=p*q
     """
-    with open(file) as data:
-        new_data = data.readlines()
-        # print(new_data)
-    return new_data
-
-
-def factorize(value):
-    """"Prints out factorials of value in the
-    value(n)=p*q format. Where p & q are
-    factorials of the value n.
-    """
-    i = 2
-
-    if value < 2:
-        return
-
-    while value % i:
-        i += 1
-
-    print(f"{value}={(value/i):.0f}*{i}")
-
-
-def main():
     try:
-        data = reading(sys.argv[1])
-        for item in data:
-            value = int(item)
-            factorize(value)
+        revfile = sys.argv[1]
+        with open(revfile) as f:
+            for revnumber in f:
+                revnumber = int(revnumber)
+                if revnumber % 2 == 0:
+                    print("{}={}*{}".format(revnumber, revnumber // 2, 2))
+                    continue
+                i = 3
+                while i < revnumber // 2:
+                    if revnumber % i == 0:
+                        print("{}={}*{}".format(revnumber, revnumber // i, i))
+                        break
+                    i = i + 2
+                if i == (revnumber // 2) + 1:
+                    print("{}={}*{}".format(revnumber, revnumber, 1))
+    except (IndexError):
+        pass
 
-    except Exception as err:
-        print(err)
 
-
-"""start Main Function"""
-main()
+# autostart
+fc()
